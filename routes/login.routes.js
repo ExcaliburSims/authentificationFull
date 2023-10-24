@@ -1,11 +1,12 @@
 const express = require('express')
-const {users, insert} = require('../controllers/authentification')
+const {users, insert, login} = require('../controllers/authentification')
 
 const router = express.Router()
 
 /// /////////////////////////////////////
 
-router.get('/users', users)
-router.post('/insert', insert)
+router.get('/api/users', users)
+router.post('/api/insert', insert)
+router.post('/api/login', login)
 
 module.exports = router
