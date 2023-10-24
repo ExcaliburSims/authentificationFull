@@ -4,11 +4,11 @@ const {connect} = require('../model/index')
 exports.insert = (req, res) => {
   // const { name, lastname, phone, mail, password } = req.body
   // eslint-disable-next-line prettier/prettier
-  const {role_id, nom, prenom, pseudo, email, telephone, sexe, password}= req.body
+  const {nom, prenom, email, telephone, sexe, password}= req.body
   // const sqlInsert =
   //   'INSERT INTO user (nom_user,prenom_user,tel_user,password) VALUES (?,?,?,?)'
   const sqlInsert =
-    'INSERT INTO users(role_id, nom, prenom, pseudo, email, telephone, sexe, password) VALUES (?,?,?,?,?,?,?,?)'
+    'INSERT INTO users(nom, prenom, email, telephone, sexe, password) VALUES (?,?,?,?,?,?)'
 
   connect.getConnection(err => {
     if (err) {
@@ -20,7 +20,7 @@ exports.insert = (req, res) => {
 
   connect.query(
     sqlInsert,
-    [role_id, nom, prenom, pseudo, email, telephone, sexe, password],
+    [nom, prenom, email, telephone, sexe, password],
     (err, result) => {
       if (err) throw err
       console.log('--------> Created new User')
