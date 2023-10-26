@@ -76,13 +76,7 @@ exports.login = (req, res) => {
     if (err) {
       res.status(500).send(err)
     } else if (result.length > 0) {
-      const user = {
-        id: result[0].id,
-        username: phone_1,
-      }
-      const token = jwt.sign(user, process.env.SECRET_KEY, {expiresIn: '1h'})
-      res.status(200).json({token})
-      // res.status(200).send(result[0])
+      res.status(200).send(result[0])
     } else {
       res.status(400).send("L'utilisateur n'existe pas")
     }
