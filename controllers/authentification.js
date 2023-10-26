@@ -5,9 +5,29 @@ require('dotenv').config()
 const {connect} = require('../model/index')
 
 exports.insert = (req, res) => {
-  const {nom, prenom, email, telephone, sexe, password} = req.body
+  // const {nom, prenom, email, telephone, sexe, password} = req.body
+  const {
+    role_id,
+    name,
+    sexe,
+    email,
+    avatar,
+    phone_1,
+    phone_2,
+    avatar2,
+    email_verified_at,
+    password,
+    remember_token,
+    settings,
+    settings2,
+    statu_id,
+    type_id,
+    is_verified,
+    created_at,
+    updated_at,
+  } = req.body
   const sqlInsert =
-    'INSERT INTO users(nom, prenom, email, telephone, sexe, password) VALUES (?,?,?,?,?,?)'
+    'INSERT INTO users(role_id, name, sexe, email, avatar, phone_1, phone_2, avatar2, email_verified_at, password, remember_token, settings, settings2, statu_id, type_id, is_verified, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
 
   connect.getConnection(err => {
     if (err) {
@@ -19,7 +39,7 @@ exports.insert = (req, res) => {
 
   connect.query(
     sqlInsert,
-    [nom, prenom, email, telephone, sexe, password],
+    [name, sexe, email, phone_1, sexe, password],
     (err, result) => {
       if (err) throw err
       console.log('--------> Created new User')
@@ -42,8 +62,8 @@ exports.users = (req, res) => {
 }
 
 exports.login = (req, res) => {
-  const {nom, password} = req.body
-  const sqllogin = 'select * from users where nom=? AND password=?'
+  const {phone_1, password} = req.body
+  const sqllogin = 'select * from users where phone_1=? AND password=?'
 
   connect.getConnection(err => {
     if (err) {
@@ -52,13 +72,13 @@ exports.login = (req, res) => {
       console.log('Connecté à la base de données MySQL!')
     }
   })
-  connect.query(sqllogin, [nom, password], (err, result) => {
+  connect.query(sqllogin, [phone_1, password], (err, result) => {
     if (err) {
       res.status(500).send(err)
     } else if (result.length > 0) {
       const user = {
         id: result[0].id,
-        username: nom,
+        username: phone_1,
       }
       const token = jwt.sign(user, process.env.SECRET_KEY, {expiresIn: '1h'})
       res.status(200).json({token})
